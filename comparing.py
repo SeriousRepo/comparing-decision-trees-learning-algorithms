@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn import model_selection
 from id3 import Id3Estimator
+from time import perf_counter
 
 DatasetNames = {
     'iris': 0,
@@ -41,29 +42,34 @@ for single_set in datasets:
     Xs.append(X)
     ys.append(y)
 
-
-splits = []
-for index in range(0, len(datasets)):
-    splits.append(model_selection.train_test_split(Xs[index], ys[index], test_size=0.333, random_state=0))
-
-
-for index in range(0, len(datasets)):
-    estimator = Id3Estimator()
-    estimator.fit(splits[index][SplitPartNames['X_train']], splits[index][SplitPartNames['y_train']])
-
-    print("predicted labels for {} dataset".format(getDatasetName(index)))
-    print(estimator.predict(splits[index][SplitPartNames['X_test']]))
-    print("true labels for {} dataset".format(getDatasetName(index)))
-    print(splits[index][SplitPartNames['y_test']])
-
-# To use
-"""k = 10
+k = 10
 cv = model_selection.StratifiedKFold(n_splits=k)
 
-for index in range(0, len(datasets)):
+for dataset_index in range(0, len(datasets)):
     fold = 0
-    for train, test in cv.split(splits[index][SplitPartName.X_train], splits[index][SplitPartName.y_train]):
-        print("Zbiór {}, Fold {} ({} w TS, {} w VS)".format(index, fold, len(train), len(test)))
-        print(train)
+    for train_indexes, test_indexes in cv.split(Xs[dataset_index], ys[dataset_index]):
+        print("Zbiór {}, Fold {} ({} w TS, {} w VS)".format(getDatasetName(dataset_index), fold, len(train_indexes), len(test_indexes)))
+        fold_sets = [[], [], [], []]
+
+        fold_sets[SplitPartNames['X_train']] = Xs[dataset_index][train_indexes]
+        fold_sets[SplitPartNames['y_train']] = ys[dataset_index][train_indexes]
+
+        fold_sets[SplitPartNames['X_test']] = Xs[dataset_index][train_indexes]
+        fold_sets[SplitPartNames['y_test']] = ys[dataset_index][train_indexes]
+
+        estimator = Id3Estimator()
+
+        start_time = perf_counter()
+        estimator.fit(fold_sets[SplitPartNames['X_train']], fold_sets[SplitPartNames['y_train']])
+        estimator.predict(fold_sets[SplitPartNames['X_test']])
+        end_time = perf_counter()
+
+        print(end_time-start_time)
+
+        """
+        print("predicted labels for {} dataset".format(getDatasetName(dataset_index)))
+        print(estimator.predict(fold_sets[SplitPartNames['X_test']]))
+        print("true labels for {} dataset".format(getDatasetName(dataset_index)))
+        print(fold_sets[SplitPartNames['y_test']])
+        """
         fold += 1
-"""
