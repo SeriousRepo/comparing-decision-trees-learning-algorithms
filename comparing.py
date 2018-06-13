@@ -33,6 +33,7 @@ for dataset_index in range(0, len(datasets)):
 
 
         #trees_algorithms.measure_times_of_cart(fold_sets)
+        trees_algorithms.measure_times_of_c45(utils.get_dataset_name(dataset_index))
 
 
 
