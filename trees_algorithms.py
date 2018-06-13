@@ -11,12 +11,13 @@ def measure_times_of_id3(sets):
     start_time = perf_counter()
     clf.fit(sets[SplitPartNames['X_train']], sets[SplitPartNames['y_train']])
     end_time = perf_counter()
-    print("time of tree building {}".format(end_time - start_time))
+    learning_time = end_time - start_time
 
     start_time = perf_counter()
     clf.predict(sets[SplitPartNames['X_test']])
     end_time = perf_counter()
-    print("time of labels prediction {}".format(end_time - start_time))
+    prediction_time = end_time - start_time
+    return learning_time, prediction_time
 
 
 def measure_times_of_cart(sets):
@@ -25,10 +26,10 @@ def measure_times_of_cart(sets):
     start_time = perf_counter()
     clf.fit(sets[SplitPartNames['X_train']], sets[SplitPartNames['y_train']])
     end_time = perf_counter()
-    print("time of tree building {}".format(end_time - start_time))
+    learning_time = end_time - start_time
 
     start_time = perf_counter()
     clf.predict(sets[SplitPartNames['X_test']])
     end_time = perf_counter()
-    print("time of labels prediction {}".format(end_time - start_time))
-
+    prediction_time = end_time - start_time
+    return learning_time, prediction_time
