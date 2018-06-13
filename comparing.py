@@ -22,7 +22,7 @@ cv = model_selection.StratifiedKFold(n_splits=30)
 for dataset_index in range(0, len(datasets)):
     fold = 0
     for train_indexes, test_indexes in cv.split(Xs[dataset_index], ys[dataset_index]):
-        #print("Zbiór {}, Fold {} ({} w TS, {} w VS)".format(utils.get_dataset_name(dataset_index), fold, len(train_indexes), len(test_indexes)))
+        print("Zbiór {}, Fold {} ({} w TS, {} w VS)".format(utils.get_dataset_name(dataset_index), fold, len(train_indexes), len(test_indexes)))
         fold_sets = [[], [], [], []]
 
         fold_sets[SplitPartNames['X_train']] = Xs[dataset_index][train_indexes]
