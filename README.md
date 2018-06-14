@@ -9,3 +9,6 @@ All of below avaliable in Python package manager pip
 - pandas
 - scipy
 - decision-tree-id3
+
+## Run
+`$ python3 comparing.py`
