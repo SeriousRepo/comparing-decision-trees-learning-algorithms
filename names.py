@@ -1,16 +1,20 @@
 DatasetUrls = ['https://raw.githubusercontent.com/w4k2/data/master/datasets/iris.csv',
-                 'https://raw.githubusercontent.com/w4k2/data/master/datasets/diabetes.csv',
-#                 'https://raw.githubusercontent.com/w4k2/data/master/datasets/ionosphere.csv',
-#                 'https://raw.githubusercontent.com/w4k2/data/master/datasets/digit.csv',
-#                 'https://raw.githubusercontent.com/w4k2/data/master/datasets/german.csv'
-                 ]
+               'https://raw.githubusercontent.com/w4k2/data/master/datasets/diabetes.csv',
+               'https://raw.githubusercontent.com/w4k2/data/master/datasets/ionosphere.csv',
+               'https://raw.githubusercontent.com/w4k2/data/master/datasets/digit.csv',
+               'https://raw.githubusercontent.com/w4k2/data/master/datasets/waveform.csv'
+               ]
 
-DatasetNames = {'iris': 0,
-                'diabetes': 1,
-#                'ionosphere': 2,
-#                'digit': 3,
-#                'waveform': 4
-                }
+DatasetNames = {}
+
+
+def set_names():
+    i = 0
+    for url in DatasetUrls:
+        name = url.split('/')[-1].split('.')[0]
+        DatasetNames[name] = i
+        i += 1
+
 
 SplitPartNames = {'X_train': 0,
                   'X_test': 1,
